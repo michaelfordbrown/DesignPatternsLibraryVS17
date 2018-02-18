@@ -145,11 +145,33 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoardDecoration.h" />
+    <ClInclude Include="BoardFunctions.h" />
+    <ClInclude Include="BoardSquare.h" />
+    <ClInclude Include="DefaultBoard.h" />
+    <ClInclude Include="DefaultPlayer.h" />
+    <ClInclude Include="EnhancedBoard.h" />
+    <ClInclude Include="EnhancedPlayer.h" />
+    <ClInclude Include="GamesBoard.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerDecoration.h" />
+    <ClInclude Include="PlayerFunctions.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoardDecoration.cpp" />
+    <ClCompile Include="BoardFunctions.cpp" />
+    <ClCompile Include="BoardSquare.cpp" />
     <ClCompile Include="DecoratorBoardGame.cpp" />
+    <ClCompile Include="DefaultBoard.cpp" />
+    <ClCompile Include="DefaultPlayer.cpp" />
+    <ClCompile Include="EnhancedBoard.cpp" />
+    <ClCompile Include="EnhancedPlayer.cpp" />
+    <ClCompile Include="GamesBoard.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerDecoration.cpp" />
+    <ClCompile Include="PlayerFunctions.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

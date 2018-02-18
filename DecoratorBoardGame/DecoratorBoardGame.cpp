@@ -7,277 +7,211 @@
 #include <array>
 #include <vector>
 
-#ifdef MEMORYDEBUG
-#define _CRTDBG_MAP_ALLOC  
-#include <stdlib.h>  
-#include <crtdbg.h>  
-#endif
-
 #define BOARDSIZE 5
 #define BOARDCOLSIZE BOARDSIZE
 #define BOARDROWSIZE BOARDCOLSIZE 
 #define PLAYERSTARTCOL 0
 #define PLAYERSTARTROW 0
 
+#include "Player.h"
+#include "DefaultPlayer.h"
+#include "PlayerDecoration.h"
+#include "EnhancedPlayer.h"
+
+#include "BoardSquare.h"
+#include "GamesBoard.h"
+#include "DefaultBoard.h"
+#include "BoardDecoration.h"
+#include "EnhancedBoard.h"
+
+#ifdef MEMORYDEBUG
+#define _CRTDBG_MAP_ALLOC  
+#include <stdlib.h>  
+#include <crtdbg.h>  
+#endif
+
 using namespace std;
 
-enum rotation { LEFT = 0, RIGHT = 1 };
-enum compassPoints {NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3, COMPASSMAX = WEST};
-
-#define MAXCOMPASSPOINTS = 
-class AbstractBoardSquare {
+class InnerWallBoard : public BoardDecoration
+{
 public:
 
+	InnerWallBoard(std::shared_ptr<GamesBoard>gb, int colPosition, int rowPosition, compassPoints wallSide);
+	InnerWallBoard(std::shared_ptr<InnerWallBoard> iwb, int colPosition, int rowPosition, compassPoints wallSide);
+
+	void movePlayerOneSquare(std::shared_ptr<Player>player);
 };
 
-class AbstractPlayer {
-public:
-	std::string name;
-	int colPosition;
-	int rowPosition;
-};
-
-class Player:public AbstractPlayer {
-public:
-	compassPoints facingDirection;
-
-	void turn(rotation rot) {
-		switch (rot)
-		{
-		case LEFT:
-			facingDirection = static_cast<compassPoints>((facingDirection - 1 + COMPASSMAX) % COMPASSMAX);
-			break;
-		case RIGHT:
-			facingDirection = static_cast<compassPoints>((facingDirection + 1 + COMPASSMAX) % COMPASSMAX);
-			break;
-		default:
-			break;
-		}
-	};
-
-public:
-	Player(std::string basename) {
-		name.assign(basename); 
-		colPosition = 0;
-		rowPosition = 0;
-		facingDirection = NORTH;
-	}
-};
-
-
-//Board ChessBoard(BOARDSIZE);
-//ChessBoard.DisplayBoard();
-
-class BoardSquare : public AbstractPlayer{
-public:
-	//virtual void addPlayer() = 0;
-	shared_ptr<Player> boardSpace;
-	bool northWall;
-	bool southWall;
-	bool westWall;
-	bool eastWall;
-};
-
-class DefaultBoard: public BoardSquare {
-
-public:
-	vector<vector<BoardSquare>> board;
-
-	DefaultBoard() {
-		board.resize(BOARDCOLSIZE);
-		for (int i = 0; i < BOARDCOLSIZE; i++)
-		{
-			board[i].resize(BOARDROWSIZE);
-			for (int l = 0; l < BOARDROWSIZE; l++)
-			{
-				board[i][l].boardSpace = nullptr;
-				if (i == 0)
-				{
-					board[i][l].southWall = true;
-				}
-				else
-				{
-					board[i][l].southWall = false;
-				}
-
-				if (i == (BOARDCOLSIZE - 1))
-				{
-					board[i][l].northWall = true;
-				}
-				else
-				{
-					board[i][l].northWall = false;
-				}
-
-				if (l == 0)
-				{
-					board[i][l].westWall = true;
-				}
-				else
-				{
-					board[i][l].westWall = false;
-				}
-
-				if (l == (BOARDROWSIZE - 1))
-				{
-					board[i][l].eastWall = true;
-				}
-				else
-				{
-					board[i][l].eastWall = false;
-				}
-				
-				
-			}
-		}
-	}
-
-	void addPlayer(shared_ptr<Player> player)
+InnerWallBoard::InnerWallBoard(std::shared_ptr<GamesBoard> gb, int colPosition, int rowPosition, compassPoints wallSide) : BoardDecoration(gb){
+	this->prevDeco = gb;
+	switch (wallSide)
 	{
-		board[player->colPosition][player->rowPosition].boardSpace = player;
-	};
-
-	void movePlayerOneSquare(shared_ptr<Player> player) {
-		board[player->colPosition][player->rowPosition].boardSpace = nullptr;
-		switch (player->facingDirection)
-		{
-		case NORTH:
-			if (!board[player->colPosition][player->rowPosition].northWall)
-			{
-				player->colPosition++;
-			}
-			break;
-		case SOUTH:
-			if (!board[player->colPosition][player->rowPosition].southWall)
-			{
-				player->colPosition--;
-			}
-			break;
-		case WEST:
-			if (!board[player->colPosition][player->rowPosition].westWall)
-			{
-				player->rowPosition--;
-			}
-			break;
-		case EAST:
-			if (!board[player->colPosition][player->rowPosition].eastWall)
-			{
-				player->rowPosition++;
-			}
-			break;
-		default:
-			break;
-		}
-		board[player->colPosition][player->rowPosition].boardSpace = player;
-	};
-
-
-	void displayBoard()
-	{
-		for (int y = (BOARDROWSIZE - 1); y >= 0; y--)
-		{
-			// Display square contents
-			for (int x = 0; x < BOARDCOLSIZE; x++)
-			{
-				if (board[y][x].boardSpace != nullptr)
-				{
-					std::cout << board[y][x].boardSpace->name;
-				}
-				else
-				{
-					std::cout << "(" << x << ", " << y << ")";
-				}
-				std::cout << "\t\t";
-			}
-			std::cout << std::endl;
-		}
+	case NORTH:
+		prevDeco->board[colPosition][rowPosition].northWall = true;
+		break;
+	case SOUTH:
+		prevDeco->board[colPosition][rowPosition].southWall = true;
+		break;
+	case WEST:
+		prevDeco->board[colPosition][rowPosition].westWall = true;
+		break;
+	case EAST:
+		prevDeco->board[colPosition][rowPosition].eastWall = true;
+		break;
+	default:
+		break;
 	}
+}
 
-	void displayWalls()
+InnerWallBoard::InnerWallBoard(std::shared_ptr<InnerWallBoard> iwb, int colPosition, int rowPosition, compassPoints wallSide) : BoardDecoration(iwb->prevDeco)
+{
+	this->prevDeco = iwb->prevDeco;
+	switch (wallSide)
 	{
-		for (int y = (BOARDROWSIZE - 1); y >= 0; y--)
-		{
-			// Display square contents
-			for (int x = 0; x < BOARDCOLSIZE; x++)
-			{
-
-				if (board[y][x].westWall)
-				{
-					std::cout << "WWWWW";
-				}
-
-				if (board[y][x].northWall)
-				{
-					std::cout << "NNNNN";
-				}
-
-				if (board[y][x].southWall)
-				{
-					std::cout << "SSSSS";
-				}
-				
-				if (board[y][x].eastWall)
-				{
-					std::cout << "EEEEE";
-				}
-
-
-				std::cout << "     ";
-			}
-			std::cout << std::endl;
-		}
+	case NORTH:
+		prevDeco->board[colPosition][rowPosition].northWall = true;
+		break;
+	case SOUTH:
+		prevDeco->board[colPosition][rowPosition].southWall = true;
+		break;
+	case WEST:
+		prevDeco->board[colPosition][rowPosition].westWall = true;
+		break;
+	case EAST:
+		prevDeco->board[colPosition][rowPosition].eastWall = true;
+		break;
+	default:
+		break;
 	}
-};
+}
+
+void InnerWallBoard::movePlayerOneSquare(std::shared_ptr<Player> player)
+{
+	std::cout << "InnerWallBoard::MPOQ\n";
+	prevDeco->movePlayerOneSquare(player);
+}
+
 
 int main()
 {
-	{
+	{		
 		/* Create a square playing board  5 x 5 */
-		shared_ptr<DefaultBoard>GameBoard = make_shared<DefaultBoard>();
-		
-		cout << "Board Walls\n";
-		GameBoard->displayWalls();
-		cout << "\nDefault Board\n";
-		GameBoard->displayBoard();
+		shared_ptr<GamesBoard>gamesBoard = make_shared<DefaultBoard>();
+		//gamesBoard->displayWalls();
+		//gamesBoard->displayBoard();
 
-		/* Add playerupon the boardm  at 0.0 facing North*/
-		shared_ptr<Player> playerOne = make_shared<Player>("Player One");
-		GameBoard->addPlayer(playerOne);
+		/* Add player upon the board at 0.0 facing North */
+		shared_ptr<Player> playerOne = make_shared<DefaultPlayer>("Player 1");
+		gamesBoard->addPlayer(playerOne);
+		gamesBoard->displayBoard();
+
 		cout << "\nPlay One Added To Board\n";
-		GameBoard->displayBoard();
+
+		/* Add inner walls to the game board*/
+		shared_ptr<InnerWallBoard>innerWallBoard = make_shared<InnerWallBoard>(gamesBoard, 2, 2, NORTH);
+		innerWallBoard = make_shared<InnerWallBoard>(innerWallBoard, 2, 2, EAST);
+		//innerWallBoard->displayWalls();
+		cout << std::endl;
 
 		/* Move player East by one square */
 		playerOne->turn(RIGHT);
-		GameBoard->movePlayerOneSquare(playerOne);
-		cout << "\nPlayer One has Moved\n";
-		GameBoard->displayBoard();
+		innerWallBoard->movePlayerOneSquare(playerOne);
+		//cout << "\nPlayer One has Moved\n";
+		//innerWallBoard->displayBoard();
+		cout << std::endl;
 
 		/* Move player North by ten squares */
 		playerOne->turn(LEFT);
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 10; i++)
 		{
-			GameBoard->movePlayerOneSquare(playerOne);
-			cout << "\nPlayer One has Moved North\n";
-			GameBoard->displayBoard();
+			innerWallBoard->movePlayerOneSquare(playerOne);
+			//cout << "\nPlayer One has Moved North\n";
 		}
+		//innerWallBoard->displayBoard();
+		cout << std::endl;
 
 		/* Move player East by ten squares */
 		playerOne->turn(RIGHT);
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 10; i++)
 		{
-			GameBoard->movePlayerOneSquare(playerOne);
-			cout << "\nPlayer One has Moved East\n";
-			GameBoard->displayBoard();
+			innerWallBoard->movePlayerOneSquare(playerOne);
+			//cout << "\nPlayer One has Moved East\n";
 		}
+		//innerWallBoard->displayBoard();
+		cout << std::endl;
+
+		/* Add new walls to the board */
+		cout << "\nNew Inner Wall Added\n";
+		innerWallBoard->addWall(2, 2, compassPoints::NORTH);
+		innerWallBoard->displayWalls();
+		innerWallBoard->displayBoard();
+		cout << std::endl;
+
+		/* Make Enhanced Games Board*/
+		cout << "\nMake Enhanced Games Board\n";
+		shared_ptr<EnhancedBoard>enhancedGamesBoard = make_shared<EnhancedBoard>(innerWallBoard);
+		//enhancedGamesBoard->displayWalls();
+		//enhancedGamesBoard->displayBoard();
+		cout << std::endl;
+
+		/* Add Power Item to the board */
+		cout << "\nAdd Power Cookie to the new board\n";
+		shared_ptr<EnhancedPlayer> cookieOne = make_shared<EnhancedPlayer>("Cookie 1",  0, 1,1);
+		cout << "\n" << cookieOne->name << " has item power of " << cookieOne->playerSpeed << endl;
+		enhancedGamesBoard->addPlayer(cookieOne);
+		enhancedGamesBoard->displayBoard();
+
+		/* Make player 2 to eat cookies */
+		cout << "\nEnhance Player One\n";
+		shared_ptr<EnhancedPlayer> enhancedPlayerOne = make_shared<EnhancedPlayer>(playerOne);
+		cout << "\n" << enhancedPlayerOne->name << " has speed " << enhancedPlayerOne->playerSpeed << endl;
+		enhancedGamesBoard->addPlayer(enhancedPlayerOne);
+		enhancedGamesBoard->displayBoard();
+		cout << std::endl;
+
+		/* Move player west by four squares */
+		enhancedPlayerOne->turn(LEFT);
+		enhancedPlayerOne->turn(LEFT);
+		for (int i = 0; i < 4; i++)
+		{
+			enhancedGamesBoard->movePlayerOneSquare(enhancedPlayerOne);
+		}
+		enhancedGamesBoard->displayBoard();
+		cout << std::endl;
+
+		/* Move player 1 South by three square */
+		enhancedPlayerOne->turn(LEFT);
+		for (int i = 0; i < 3; i++)
+		{
+			enhancedGamesBoard->movePlayerOneSquare(enhancedPlayerOne);
+		}
+		enhancedGamesBoard->movePlayerOneSquare(enhancedPlayerOne);
+		cout << "\nPlayer One has Moved into Cookie square\n";
+		enhancedGamesBoard->displayBoard();
+		cout << std::endl;
+
+		/* Move player 1 East by one square */
+		enhancedPlayerOne->turn(LEFT);
+		for (int i = 0; i < 1; i++)
+		{
+			enhancedGamesBoard->movePlayerOneSquare(enhancedPlayerOne);
+		}
+		enhancedGamesBoard->movePlayerOneSquare(enhancedPlayerOne);
+		cout << "\nPlayer One has Moved into Cookie square\n";
+		enhancedGamesBoard->displayBoard();
+
+
+		cout << "\nPress Any Key To Continue . . . \n";
 
 		getchar();
+
 	}
+
 #ifdef MEMORYDEBUG
 	_CrtDumpMemoryLeaks();
 #endif
 
+
+
 	return 0;
 }
-
-
-
