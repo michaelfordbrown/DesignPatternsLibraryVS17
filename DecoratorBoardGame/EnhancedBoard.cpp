@@ -87,6 +87,7 @@ void EnhancedBoard::addPlayer(std::shared_ptr<EnhancedPlayer> ePlayer)
 {
 	eBoard[ePlayer->colPosition][ePlayer->rowPosition].enhancedBoardSpace = ePlayer;
 	eBoard[ePlayer->colPosition][ePlayer->rowPosition].boardSpace = ePlayer;
+	board[ePlayer->colPosition][ePlayer->rowPosition].boardSpace = ePlayer;
 	prevDeco->addPlayer(ePlayer);
 };
 
@@ -96,17 +97,19 @@ void EnhancedBoard::movePlayerOneSquare(std::shared_ptr<EnhancedPlayer> ePlayer)
 	int i = 0;
 	while (i <  ePlayer->playerSpeed)
 	{
-		std::cout << "EnhancedBoard::MPOQ\n";
+		
 		ePlayer->playerSpeed = ePlayer->playerSpeed + GetPowerNextSquare(eBoard, ePlayer);
 
 		eBoard[ePlayer->colPosition][ePlayer->rowPosition].boardSpace = nullptr;
 		eBoard[ePlayer->colPosition][ePlayer->rowPosition].enhancedBoardSpace = nullptr;
+		board[ePlayer->colPosition][ePlayer->rowPosition].boardSpace = nullptr;
 
 		ePlayer->colPosition = GetNextColPosition(board, ePlayer);
 		ePlayer->rowPosition = GetNextRowPosition(board, ePlayer);
 
 		eBoard[ePlayer->colPosition][ePlayer->rowPosition].boardSpace = ePlayer;
 		eBoard[ePlayer->colPosition][ePlayer->rowPosition].enhancedBoardSpace = ePlayer;
+		board[ePlayer->colPosition][ePlayer->rowPosition].boardSpace = ePlayer;
 
 		prevDeco->movePlayerOneSquare(ePlayer->prevDeco);
 
@@ -177,9 +180,4 @@ int EnhancedBoard::GetPowerNextSquare(std::vector<std::vector<EnhancedSquare>> e
 	}
 	return powerPoints;
 
-}
-
-void EnhancedBoard::displayBoard()
-{
-	prevDeco->displayBoard();
 }

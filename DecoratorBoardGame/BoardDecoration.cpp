@@ -22,14 +22,6 @@ void BoardDecoration::addPlayer(std::shared_ptr<Player> player) {
 }
 
 void BoardDecoration::movePlayerOneSquare(std::shared_ptr<Player> player) {
-	std::cout << "BoardDecoration::MPOQ\n";
+
 	prevDeco->movePlayerOneSquare(player);
-}
-
-void BoardDecoration::displayBoard() {
-	prevDeco->displayBoard();
-}
-
-void BoardDecoration::displayWalls() {
-	prevDeco->displayWalls();
 }

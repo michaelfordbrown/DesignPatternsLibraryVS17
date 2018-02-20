@@ -10,8 +10,6 @@ public:
 
 	void addPlayer(std::shared_ptr<Player> player);
 	void movePlayerOneSquare(std::shared_ptr<Player> player);
-	void displayBoard();
-	void displayWalls();
 
 	BoardDecoration();
 

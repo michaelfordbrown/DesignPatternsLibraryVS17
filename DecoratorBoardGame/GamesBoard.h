@@ -11,9 +11,6 @@ class GamesBoard :
 public:
 	virtual void addPlayer(std::shared_ptr<Player> player) {};
 	virtual void movePlayerOneSquare(std::shared_ptr<Player> player) {};
-	virtual void addWall(int rowPosition, int colPosition, compassPoints comPoint) {};
-	virtual void displayBoard() {};
-	virtual void displayWalls() {};
 
 	std::vector<std::vector<BoardSquare>> board;
 	
