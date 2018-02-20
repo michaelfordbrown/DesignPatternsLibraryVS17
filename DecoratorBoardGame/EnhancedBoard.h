@@ -1,5 +1,4 @@
 #pragma once
-#include "BoardSquare.h"
 #include "BoardDecoration.h"
 #include "EnhancedPlayer.h"
 

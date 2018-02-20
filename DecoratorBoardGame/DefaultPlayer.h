@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "PlayerFunctions.h"
 
 class DefaultPlayer :
 	public Player

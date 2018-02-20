@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 
+#define PLAYERSTARTCOL 0
+#define PLAYERSTARTROW 0
+
 // Player turning control and facing points
 enum rotation { LEFT = 0, RIGHT = 1 };
 enum compassPoints { NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3, COMPASSMAX = WEST + 1 };

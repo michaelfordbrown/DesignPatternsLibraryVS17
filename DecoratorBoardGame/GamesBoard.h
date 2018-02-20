@@ -2,8 +2,10 @@
 #include "Player.h"
 #include "BoardSquare.h"
 #include "BoardFunctions.h"
-#include <memory>
-#include <vector>
+
+#define BOARDSIZE 5
+#define BOARDCOLSIZE BOARDSIZE
+#define BOARDROWSIZE BOARDCOLSIZE 
 
 class GamesBoard :
 	public BoardSquare

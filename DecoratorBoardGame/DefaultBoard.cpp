@@ -1,15 +1,5 @@
 #include "stdafx.h"
-#include <memory>
-#include <vector>
-#include <iostream>
-#include <string>
 #include "DefaultBoard.h"
-#include "GamesBoard.h"
-#include "BoardFunctions.h"
-
-#define BOARDSIZE 5
-#define BOARDCOLSIZE BOARDSIZE
-#define BOARDROWSIZE BOARDCOLSIZE 
 
 DefaultBoard::DefaultBoard()
 {

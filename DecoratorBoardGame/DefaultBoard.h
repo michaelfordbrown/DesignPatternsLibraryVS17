@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 #include"GamesBoard.h"
 
 class DefaultBoard :

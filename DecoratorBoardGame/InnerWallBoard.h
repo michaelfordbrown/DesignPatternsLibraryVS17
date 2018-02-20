@@ -1,6 +1,5 @@
 #pragma once
 #include "BoardDecoration.h"
-#include <iostream>
 
 class InnerWallBoard :
 	public BoardDecoration

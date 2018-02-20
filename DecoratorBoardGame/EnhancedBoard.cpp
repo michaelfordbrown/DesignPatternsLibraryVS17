@@ -1,13 +1,5 @@
 #include "stdafx.h"
-#include "DefaultBoard.h"
-#include "GamesBoard.h"
 #include "EnhancedBoard.h"
-#include "Player.h"
-#include <iostream>
-
-#define BOARDSIZE 5
-#define BOARDCOLSIZE BOARDSIZE
-#define BOARDROWSIZE BOARDCOLSIZE 
 
 
 EnhancedBoard::EnhancedBoard()

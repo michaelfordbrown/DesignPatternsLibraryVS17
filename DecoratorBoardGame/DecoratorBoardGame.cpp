@@ -7,12 +7,6 @@
 #include <array>
 #include <vector>
 
-#define BOARDSIZE 5
-#define BOARDCOLSIZE BOARDSIZE
-#define BOARDROWSIZE BOARDCOLSIZE 
-#define PLAYERSTARTCOL 0
-#define PLAYERSTARTROW 0
-
 #include "Player.h"
 #include "DefaultPlayer.h"
 #include "PlayerDecoration.h"

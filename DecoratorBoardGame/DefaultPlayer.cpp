@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "DefaultPlayer.h"
-#include "PlayerFunctions.h"
-#include <string>
 
 // CONSTRUCTOR: 
 DefaultPlayer::DefaultPlayer(std::string basename) {

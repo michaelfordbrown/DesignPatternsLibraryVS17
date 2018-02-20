@@ -1,12 +1,7 @@
 #pragma once
-#include <memory>
+//#include <memory>
 #include<iostream>
 #include"GamesBoard.h"
-
-
-#define BOARDSIZE 5
-#define BOARDCOLSIZE BOARDSIZE
-#define BOARDROWSIZE BOARDCOLSIZE 
 
 class RenderBoard
 {
