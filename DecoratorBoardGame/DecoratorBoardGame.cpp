@@ -1,21 +1,12 @@
 // DecoratorBoardGame.cpp : Defines the entry point for the console application.
 //
 #include "stdafx.h"
-#include <string>
-#include <iostream>
-#include<memory>
-#include <array>
-#include <vector>
 
-#include "Player.h"
 #include "DefaultPlayer.h"
-#include "PlayerDecoration.h"
 #include "EnhancedPlayer.h"
 
-#include "BoardSquare.h"
 #include "GamesBoard.h"
 #include "DefaultBoard.h"
-#include "BoardDecoration.h"
 #include "InnerWallBoard.h"
 #include "EnhancedBoard.h"
 
@@ -36,7 +27,6 @@ int main()
 		shared_ptr<GamesBoard>gamesBoard = make_shared<DefaultBoard>();
 		RenderBoard rGB(gamesBoard);
 		rGB.displayBoard();
-		rGB.displayWalls();
 
 		/* Add player upon the board at 0.0 facing North */
 		shared_ptr<Player> playerOne = make_shared<DefaultPlayer>("Player 1");
@@ -52,7 +42,7 @@ int main()
 		playerOne->turn(RIGHT);
 		gamesBoard->movePlayerOneSquare(playerOne);
 		cout << "\nPlayer One has Moved\n";
-		rGB.displayWalls();
+		rGB.displayBoard();
 
 		/* Move player North by ten squares */
 		playerOne->turn(LEFT);
@@ -60,7 +50,7 @@ int main()
 		{
 			gamesBoard->movePlayerOneSquare(playerOne);
 		}
-		rGB.displayWalls();
+		rGB.displayBoard();
 		std::cout << std::endl;
 
 		/* Move player East by ten squares */
@@ -69,7 +59,7 @@ int main()
 		{
 			gamesBoard->movePlayerOneSquare(playerOne);
 		}
-		rGB.displayWalls();
+		rGB.displayBoard();
 
 		/* Make Enhanced Games Board*/
 		std::cout << "\nMake Enhanced Games Board\n";

@@ -26,8 +26,17 @@ EnhancedBoard::EnhancedBoard(std::shared_ptr<GamesBoard> gb) {
 		eBoard[c].resize(BOARDROWSIZE);
 		for (int r = 0; r < BOARDROWSIZE; r++)
 		{
+			
 			board[c][r].boardSpace = nullptr;
 			eBoard[c][r].boardSpace = nullptr;
+			board[c][r].northWall = gb->board[c][r].northWall;
+			board[c][r].southWall = gb->board[c][r].southWall;
+			board[c][r].westWall = gb->board[c][r].westWall;
+			board[c][r].eastWall = gb->board[c][r].eastWall;
+
+			if ((board[c][r].northWall) && ((r > 0) && (r < (BOARDROWSIZE-1))))
+				;
+/*
 			if (c == 0)
 			{
 				board[c][r].westWall = true;
@@ -63,7 +72,7 @@ EnhancedBoard::EnhancedBoard(std::shared_ptr<GamesBoard> gb) {
 			{
 				board[c][r].northWall = false;
 			}
-
+*/
 
 		}
 		this->prevDeco = gb;
