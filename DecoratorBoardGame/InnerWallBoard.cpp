@@ -29,18 +29,22 @@ InnerWallBoard::InnerWallBoard(std::shared_ptr<GamesBoard> gb, int colPosition, 
 	switch (wallSide)
 	{
 	case NORTH:
+		gb->board[colPosition][rowPosition].northWall = true;
 		board[colPosition][rowPosition].northWall = true;
 		prevDeco->board[colPosition][rowPosition].northWall = true;
 		break;
 	case SOUTH:
+		gb->board[colPosition][rowPosition].southWall = true;
 		board[colPosition][rowPosition].southWall = true;
 		prevDeco->board[colPosition][rowPosition].southWall = true;
 		break;
 	case WEST:
+		gb->board[colPosition][rowPosition].westWall = true;
 		board[colPosition][rowPosition].westWall = true;
 		prevDeco->board[colPosition][rowPosition].westWall = true;
 		break;
 	case EAST:
+		gb->board[colPosition][rowPosition].eastWall = true;
 		board[colPosition][rowPosition].eastWall = true;
 		prevDeco->board[colPosition][rowPosition].eastWall = true;
 		break;

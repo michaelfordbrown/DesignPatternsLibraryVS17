@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "EnhancedBoard.h"
-
+#include "BoardFunctions.h"
 
 EnhancedBoard::EnhancedBoard()
 {
@@ -34,8 +34,6 @@ EnhancedBoard::EnhancedBoard(std::shared_ptr<GamesBoard> gb) {
 			board[c][r].westWall = gb->board[c][r].westWall;
 			board[c][r].eastWall = gb->board[c][r].eastWall;
 
-			if ((board[c][r].northWall) && ((r > 0) && (r < (BOARDROWSIZE-1))))
-				;
 /*
 			if (c == 0)
 			{

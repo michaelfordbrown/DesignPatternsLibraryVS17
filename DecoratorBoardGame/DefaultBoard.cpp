@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DefaultBoard.h"
+#include "BoardFunctions.h"
 
 DefaultBoard::DefaultBoard()
 {

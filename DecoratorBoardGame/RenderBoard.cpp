@@ -41,7 +41,7 @@ void RenderBoard::displayBoard()
 		}
 		std::cout << "+\n";
 
-		// Add top square padding
+		// Add square padding
 		for (int col = 0; col < BOARDCOLSIZE; col++)
 		{
 			if (gamesBoard->board[col][rx].boardSpace != nullptr)
@@ -54,7 +54,7 @@ void RenderBoard::displayBoard()
 			}
 			else
 			{
-				std::cout << "|";
+				std::cout << " ";
 			}
 			unsigned int l = 0;
 			while (l < (SQUARESIZE - 2))
@@ -75,7 +75,7 @@ void RenderBoard::displayBoard()
 			}
 			else
 			{
-				std::cout << "|";
+				std::cout << " ";
 			}
 		}
 		std::cout << std::endl;

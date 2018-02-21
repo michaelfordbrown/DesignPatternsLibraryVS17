@@ -60,9 +60,6 @@
     <ClInclude Include="InnerWallBoard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RenderBoard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -105,9 +102,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InnerWallBoard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderBoard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

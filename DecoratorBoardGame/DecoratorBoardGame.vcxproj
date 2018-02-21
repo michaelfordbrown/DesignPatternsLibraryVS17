@@ -157,7 +157,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerDecoration.h" />
     <ClInclude Include="PlayerFunctions.h" />
-    <ClInclude Include="RenderBoard.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -175,7 +174,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDecoration.cpp" />
     <ClCompile Include="PlayerFunctions.cpp" />
-    <ClCompile Include="RenderBoard.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

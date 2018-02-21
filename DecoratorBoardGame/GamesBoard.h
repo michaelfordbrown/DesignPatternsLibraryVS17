@@ -1,7 +1,8 @@
 #pragma once
 #include "Player.h"
 #include "BoardSquare.h"
-#include "BoardFunctions.h"
+#include <vector>
+//#include "BoardFunctions.h"
 
 #define BOARDSIZE 5
 #define BOARDCOLSIZE BOARDSIZE
